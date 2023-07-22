@@ -1,9 +1,11 @@
 #include <File_Util.h>
 #include <iostream>
 
-bool writeSave(void* myStruct, int structSize, const char* bin) {
+bool writeSave(void* myStruct, int structSize, const char* bin)
+{
     FILE* myFile = fopen(bin, "wb");
-    if (myFile == NULL) {
+    if (myFile == NULL)
+    {
         return false;
     }
 
@@ -13,9 +15,11 @@ bool writeSave(void* myStruct, int structSize, const char* bin) {
     return true;
 }
 
-bool readSave(void* myStruct, int structSize, const char* bin) {
+bool readSave(void* myStruct, int structSize, const char* bin)
+{
     FILE* myFile = fopen(bin, "rb");
-    if (myFile == NULL) {
+    if (myFile == NULL)
+    {
         return false;
     }
     
