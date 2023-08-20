@@ -11,7 +11,7 @@
 #define PI (3.1415)
 #define DEG_TO_RAD(deg) (deg * (2.0*PI/360))
 
-#define RENDERCOLOR 0, 0, 0, 0xFF // black background
+#define RENDERCOLOR {0, 0, 0, 0xFF} // black background
 // #define renderColor 255, 255, 255, 0xFF // white background
 
 class win
@@ -21,7 +21,7 @@ public:
     int h;
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
-    SDL_Color renderColor = {RENDERCOLOR};
+    SDL_Color renderColor = RENDERCOLOR;
 
     win() {}
     win(int widthVal, int heightVal, const char* title = "No Title", SDL_WindowFlags flag = SDL_WINDOW_SHOWN)
