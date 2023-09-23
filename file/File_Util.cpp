@@ -1,30 +1,30 @@
 #include <File_Util.h>
 #include <iostream>
 
-bool writeSave(void* myStruct, int structSize, const char* bin)
+bool write_save(void* my_struct, int struct_size, const char* bin)
 {
-    FILE* myFile = fopen(bin, "wb");
-    if (myFile == NULL)
+    FILE* my_file = fopen(bin, "wb");
+    if (my_file == NULL)
     {
         return false;
     }
 
-    fwrite(myStruct, structSize, 1, myFile);
-    fclose(myFile);
+    fwrite(my_struct, struct_size, 1, my_file);
+    fclose(my_file);
 
     return true;
 }
 
-bool readSave(void* myStruct, int structSize, const char* bin)
+bool read_save(void* my_struct, int struct_size, const char* bin)
 {
-    FILE* myFile = fopen(bin, "rb");
-    if (myFile == NULL)
+    FILE* my_file = fopen(bin, "rb");
+    if (my_file == NULL)
     {
         return false;
     }
     
-    fread(myStruct, structSize, 1, myFile);
-    fclose(myFile);
+    fread(my_struct, struct_size, 1, my_file);
+    fclose(my_file);
 
     return true;
 }

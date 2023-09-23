@@ -11,8 +11,8 @@
 #define PI (3.1415)
 #define DEG_TO_RAD(deg) (deg * (2.0*PI/360))
 
-#define RENDERCOLOR {0, 0, 0, 0xFF} // black background
-// #define renderColor 255, 255, 255, 0xFF // white background
+#define RENDERCOLOR 0, 0, 0, 0xFF // black background
+// #define render_color 255, 255, 255, 0xFF // white background
 
 class win
 {
@@ -21,68 +21,68 @@ public:
     int h;
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
-    SDL_Color renderColor = RENDERCOLOR;
+    SDL_Color render_color = {RENDERCOLOR};
 
     win() {}
-    win(int widthVal, int heightVal, const char* title = "No Title", SDL_WindowFlags flag = SDL_WINDOW_SHOWN)
+    win(int width, int height, const char* title = "No Title", SDL_WindowFlags flag = SDL_WINDOW_SHOWN)
     {
-        w = widthVal;
-        h = heightVal;
+        w = width;
+        h = height;
         window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flag);
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-        SDL_SetRenderDrawColor(renderer, renderColor.r, renderColor.g, renderColor.b, renderColor.a);
+        SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
     }
 
-    void init(int widthVal, int heightVal, const char* title = "No Title", SDL_WindowFlags flag = SDL_WINDOW_SHOWN)
+    void init(int width, int height, const char* title = "No Title", SDL_WindowFlags flag = SDL_WINDOW_SHOWN)
     {
-        w = widthVal;
-        h = heightVal;
+        w = width;
+        h = height;
         window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flag);
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-        SDL_SetRenderDrawColor(renderer, renderColor.r, renderColor.g, renderColor.b, renderColor.a);
+        SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
     }
 
-    void setWindowSize(int widthVal, int heightVal)
+    void set_window_size(int width, int height)
     {
-        w = widthVal;
-        h = heightVal;
+        w = width;
+        h = height;
         SDL_SetWindowSize(window, w, h);
     }
 
-    void getWindowSize(void)
+    void get_window_size(void)
     {
         SDL_GetWindowSize(window, &w, &h);
     }
 
-    void setWindowPos(int x = SDL_WINDOWPOS_CENTERED, int y = SDL_WINDOWPOS_CENTERED)
+    void set_window_pos(int x = SDL_WINDOWPOS_CENTERED, int y = SDL_WINDOWPOS_CENTERED)
     {
         SDL_SetWindowPosition(window, x, y);
     }
 
-    bool mouseInWindow(void)
+    bool mouse_in_window(void)
     {
-        int xGlobalMousePos;
-        int yGlobalMousePos;
-        int xWindowPos;
-        int yWindowPos;
+        int x_global_mouse_pos;
+        int y_global_mouse_pos;
+        int x_window_pos;
+        int y_window_pos;
 
-        SDL_GetGlobalMouseState(&xGlobalMousePos, &yGlobalMousePos);
-        SDL_GetWindowPosition(window, &xWindowPos, &yWindowPos);
+        SDL_GetGlobalMouseState(&x_global_mouse_pos, &y_global_mouse_pos);
+        SDL_GetWindowPosition(window, &x_window_pos, &y_window_pos);
 
-        int xRelative = xGlobalMousePos - xWindowPos;
-        int yRelative = yGlobalMousePos - yWindowPos;
+        int x_relative = x_global_mouse_pos - x_window_pos;
+        int y_relative = y_global_mouse_pos - y_window_pos;
 
-        if ((-1 < xRelative && xRelative < w) &&
-            (-1 < yRelative && yRelative < h))
+        if ((-1 < x_relative && x_relative < w) &&
+            (-1 < y_relative && y_relative < h))
         {
             return true;
         }
         return false;
     }
 
-    SDL_Texture* createSurfaceTexture(int widthVal, int heightVal, int r = 255, int g = 255, int b = 255, int a = 0xFF)
+    SDL_Texture* create_surface_texture(int width, int height, int r = 255, int g = 255, int b = 255, int a = 0xFF)
     {
-        SDL_Surface* surface = SDL_CreateRGBSurface(0, widthVal, heightVal, 32, 0, 0, 0, 0);
+        SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
         SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, r, g, b, a));
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -92,7 +92,7 @@ public:
 
     void clearRender(void)
     {
-        SDL_SetRenderDrawColor(renderer, renderColor.r, renderColor.g, renderColor.b, renderColor.a);
+        SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
         SDL_RenderClear(renderer);
     }
 
@@ -131,7 +131,7 @@ public:
             }
         }
     }
-    void drawLines(SDL_Point* points, SDL_Color* color, int numPoints, int xScale = 1, int yScale = 1)
+    void drawLines(SDL_Point* points, SDL_Color* color, int num_points, int xScale = 1, int yScale = 1)
     {
         if (color == NULL)
         {
@@ -153,7 +153,7 @@ public:
         xScale -= 1;
         yScale -= 1;
 
-        for (int i = 0; i < numPoints; ++i)
+        for (int i = 0; i < num_points; ++i)
         {
             points[i].x -= xScale;
             points[i].y -= yScale;
@@ -163,20 +163,20 @@ public:
         {
             for (int i = 0; points[0].y - yScale + i < points[0].y + yScale + 1; ++i)
             {
-                SDL_RenderDrawLines(renderer, points, numPoints);
-                for (int j = 0; j < numPoints; ++j)
+                SDL_RenderDrawLines(renderer, points, num_points);
+                for (int j = 0; j < num_points; ++j)
                 {
                     ++points[j].y;
                 }
             }
-            for (int j = 0; j < numPoints; ++j)
+            for (int j = 0; j < num_points; ++j)
             {
                 points[j].y -= (2*yScale) + 1;
                 ++points[j].x;
             }
         }
 
-        for (int i = 0; i < numPoints; ++i)
+        for (int i = 0; i < num_points; ++i)
         {
             points[i].x -= xScale + 1;
             points[i].y += yScale;
@@ -205,29 +205,29 @@ public:
         xScale -= 1;
         yScale -= 1;
 
-        SDL_Rect tempRect = rect;
-        tempRect.x = tempRect.x - xScale;
-        tempRect.y = tempRect.y - yScale;
+        SDL_Rect temp_rect = rect;
+        temp_rect.x = temp_rect.x - xScale;
+        temp_rect.y = temp_rect.y - yScale;
         for (int i = 0; rect.x - xScale + i < rect.x + xScale + 1; ++i)
         {
-            SDL_RenderDrawRect(renderer, &tempRect);
-            ++tempRect.x;
+            SDL_RenderDrawRect(renderer, &temp_rect);
+            ++temp_rect.x;
         }
-        tempRect = rect;
-        tempRect.x = tempRect.x - xScale;
-        tempRect.y = tempRect.y - yScale;
+        temp_rect = rect;
+        temp_rect.x = temp_rect.x - xScale;
+        temp_rect.y = temp_rect.y - yScale;
         for (int i = 0; rect.y - yScale + i < rect.y + yScale + 1; ++i)
         {
-            SDL_RenderDrawRect(renderer, &tempRect);
-            ++tempRect.y;
+            SDL_RenderDrawRect(renderer, &temp_rect);
+            ++temp_rect.y;
         }
-        tempRect = rect;
-        tempRect.x = tempRect.x + xScale;
-        tempRect.y = tempRect.y + yScale;
+        temp_rect = rect;
+        temp_rect.x = temp_rect.x + xScale;
+        temp_rect.y = temp_rect.y + yScale;
         for (int i = 0; rect.y - yScale - 1 < rect.y + yScale + i; --i)
         {
-            SDL_RenderDrawRect(renderer, &tempRect);
-            --tempRect.y;
+            SDL_RenderDrawRect(renderer, &temp_rect);
+            --temp_rect.y;
         }
     }
     void drawRect(SDL_Color* color, int xScale = 1, int yScale = 1)
@@ -302,181 +302,181 @@ public:
         int x;
         int y;
 
-        SDL_Point previousPoint = {radius, 0};
+        SDL_Point previous_point = {radius, 0};
         for (double theta = 0; theta < 360; theta = theta + increments)
         {
             x = round(radius*cos(DEG_TO_RAD(theta)));
             y = round(radius*sin(DEG_TO_RAD(theta)));
 
-            drawLine(center.x + previousPoint.x, center.y - previousPoint.y, center.x + x, center.y - y, color, scale, scale);
+            drawLine(center.x + previous_point.x, center.y - previous_point.y, center.x + x, center.y - y, color, scale, scale);
 
-            previousPoint.x = x;
-            previousPoint.y = y;
+            previous_point.x = x;
+            previous_point.y = y;
         }
     }
 };
 
-class textureImage
+class texture_image
 {
 public:
     SDL_Texture* texture = NULL;
-    SDL_Rect originalRect;
-    SDL_Rect newRect;
+    SDL_Rect original_rect;
+    SDL_Rect new_rect;
 
-    textureImage() {}
-    textureImage(SDL_Renderer* renderer, const char* path, double scaleImage = 1.0, int xPos = 1, int yPos = 1)
+    texture_image() {}
+    texture_image(SDL_Renderer* renderer, const char* path, double scale_image = 1.0, int xPos = 1, int yPos = 1)
     {
-        SDL_Surface* imageSurface = IMG_Load(path);
-        texture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+        SDL_Surface* image_surface = IMG_Load(path);
+        texture = SDL_CreateTextureFromSurface(renderer, image_surface);
 
-        originalRect.x = 0;
-        originalRect.y = 0;
-        originalRect.w = imageSurface->w;
-        originalRect.h = imageSurface->h;
-        originalRect.makeDimensions();
-        newRect.x = xPos;
-        newRect.y = xPos;
-        newRect.w = imageSurface->w * scaleImage;
-        newRect.h = imageSurface->h * scaleImage;
-        newRect.makeDimensions();
+        original_rect.x = 0;
+        original_rect.y = 0;
+        original_rect.w = image_surface->w;
+        original_rect.h = image_surface->h;
+        original_rect.makeDimensions();
+        new_rect.x = xPos;
+        new_rect.y = xPos;
+        new_rect.w = image_surface->w * scale_image;
+        new_rect.h = image_surface->h * scale_image;
+        new_rect.makeDimensions();
 
-        SDL_FreeSurface(imageSurface);
+        SDL_FreeSurface(image_surface);
     }
-    textureImage(SDL_Renderer* renderer, const char* path, int widthVal, int heightVal, int xPos = 0, int yPos = 0)
+    texture_image(SDL_Renderer* renderer, const char* path, int width, int height, int xPos = 0, int yPos = 0)
     {
-        SDL_Surface* imageSurface = IMG_Load(path);
-        texture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+        SDL_Surface* image_surface = IMG_Load(path);
+        texture = SDL_CreateTextureFromSurface(renderer, image_surface);
 
-        originalRect.x = 0;
-        originalRect.y = 0;
-        originalRect.w = imageSurface->w;
-        originalRect.h = imageSurface->h;
-        originalRect.makeDimensions();
-        newRect.x = xPos;
-        newRect.y = yPos;
-        newRect.w = widthVal;
-        newRect.h = heightVal;
-        newRect.makeDimensions();
+        original_rect.x = 0;
+        original_rect.y = 0;
+        original_rect.w = image_surface->w;
+        original_rect.h = image_surface->h;
+        original_rect.makeDimensions();
+        new_rect.x = xPos;
+        new_rect.y = yPos;
+        new_rect.w = width;
+        new_rect.h = height;
+        new_rect.makeDimensions();
 
-        SDL_FreeSurface(imageSurface);
+        SDL_FreeSurface(image_surface);
     }
-    textureImage(SDL_Renderer* renderer, SDL_Color color, int widthVal, int heightVal, int xPos = 0, int yPos = 0)
+    texture_image(SDL_Renderer* renderer, SDL_Color color, int width, int height, int xPos = 0, int yPos = 0)
     {
-        SDL_Surface* surface = SDL_CreateRGBSurface(0, widthVal, heightVal, 32, 0, 0, 0, 0);
+        SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
         SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, color.r, color.g, color.b, color.a));
         texture = SDL_CreateTextureFromSurface(renderer, surface);
         blend(SDL_BLENDMODE_BLEND);
 
-        originalRect.x = 0;
-        originalRect.y = 0;
-        originalRect.w = surface->w;
-        originalRect.h = surface->h;
-        originalRect.makeDimensions();
-        newRect.x = xPos;
-        newRect.y = yPos;
-        newRect.w = widthVal;
-        newRect.h = heightVal;
-        newRect.makeDimensions();
+        original_rect.x = 0;
+        original_rect.y = 0;
+        original_rect.w = surface->w;
+        original_rect.h = surface->h;
+        original_rect.makeDimensions();
+        new_rect.x = xPos;
+        new_rect.y = yPos;
+        new_rect.w = width;
+        new_rect.h = height;
+        new_rect.makeDimensions();
 
         SDL_FreeSurface(surface);
     }
 
-    void init(SDL_Renderer* renderer, const char* path, double scaleImage = 1.0, int xPos = 0, int yPos = 0)
+    void init(SDL_Renderer* renderer, const char* path, double scale_image = 1.0, int xPos = 0, int yPos = 0)
     {
-        SDL_Surface* imageSurface = IMG_Load(path);
-        texture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+        SDL_Surface* image_surface = IMG_Load(path);
+        texture = SDL_CreateTextureFromSurface(renderer, image_surface);
 
-        originalRect.x = 0;
-        originalRect.y = 0;
-        originalRect.w = imageSurface->w;
-        originalRect.h = imageSurface->h;
-        originalRect.makeDimensions();
-        newRect.x = xPos;
-        newRect.y = yPos;
-        newRect.w = imageSurface->w * scaleImage;
-        newRect.h = imageSurface->h * scaleImage;
-        newRect.makeDimensions();
+        original_rect.x = 0;
+        original_rect.y = 0;
+        original_rect.w = image_surface->w;
+        original_rect.h = image_surface->h;
+        original_rect.makeDimensions();
+        new_rect.x = xPos;
+        new_rect.y = yPos;
+        new_rect.w = image_surface->w * scale_image;
+        new_rect.h = image_surface->h * scale_image;
+        new_rect.makeDimensions();
 
-        SDL_FreeSurface(imageSurface);
+        SDL_FreeSurface(image_surface);
     }
-    void init(SDL_Renderer* renderer, const char* path, int widthVal, int heightVal, int xPos = 0, int yPos = 0)
+    void init(SDL_Renderer* renderer, const char* path, int width, int height, int xPos = 0, int yPos = 0)
     {
-        SDL_Surface* imageSurface = IMG_Load(path);
-        texture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+        SDL_Surface* image_surface = IMG_Load(path);
+        texture = SDL_CreateTextureFromSurface(renderer, image_surface);
 
-        originalRect.x = 0;
-        originalRect.y = 0;
-        originalRect.w = imageSurface->w;
-        originalRect.h = imageSurface->h;
-        originalRect.makeDimensions();
-        newRect.x = xPos;
-        newRect.y = yPos;
-        newRect.w = widthVal;
-        newRect.h = heightVal;
-        newRect.makeDimensions();
+        original_rect.x = 0;
+        original_rect.y = 0;
+        original_rect.w = image_surface->w;
+        original_rect.h = image_surface->h;
+        original_rect.makeDimensions();
+        new_rect.x = xPos;
+        new_rect.y = yPos;
+        new_rect.w = width;
+        new_rect.h = height;
+        new_rect.makeDimensions();
 
-        SDL_FreeSurface(imageSurface);
+        SDL_FreeSurface(image_surface);
     }
-    void init(SDL_Renderer* renderer, SDL_Color color, int widthVal, int heightVal, int xPos = 0, int yPos = 0)
+    void init(SDL_Renderer* renderer, SDL_Color color, int width, int height, int xPos = 0, int yPos = 0)
     {
-        SDL_Surface* surface = SDL_CreateRGBSurface(0, widthVal, heightVal, 32, 0, 0, 0, 0);
+        SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
         SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, color.r, color.g, color.b, color.a));
         texture = SDL_CreateTextureFromSurface(renderer, surface);
         blend(SDL_BLENDMODE_BLEND);
 
-        originalRect.x = 0;
-        originalRect.y = 0;
-        originalRect.w = surface->w;
-        originalRect.h = surface->h;
-        originalRect.makeDimensions();
-        newRect.x = xPos;
-        newRect.y = yPos;
-        newRect.w = widthVal;
-        newRect.h = heightVal;
-        newRect.makeDimensions();
+        original_rect.x = 0;
+        original_rect.y = 0;
+        original_rect.w = surface->w;
+        original_rect.h = surface->h;
+        original_rect.makeDimensions();
+        new_rect.x = xPos;
+        new_rect.y = yPos;
+        new_rect.w = width;
+        new_rect.h = height;
+        new_rect.makeDimensions();
 
         SDL_FreeSurface(surface);
     }
 
-    void reSize(int wVal, int hVal)
+    void resize(int w, int h)
     {
-        newRect.w = wVal;
-        newRect.h = hVal;
-        newRect.makeDimensions();
+        new_rect.w = w;
+        new_rect.h = h;
+        new_rect.makeDimensions();
     }
 
-    void changePos(int xPos, int yPos)
+    void change_pos(int xPos, int yPos)
     {
-        newRect.x = xPos;
-        newRect.y = yPos;
-        newRect.makeDimensions();
+        new_rect.x = xPos;
+        new_rect.y = yPos;
+        new_rect.makeDimensions();
     }
 
-    void changePosAndSize(int wVal, int hVal, int xPos, int yPos)
+    void change_pos_and_size(int w, int h, int xPos, int yPos)
     {
-        newRect.x = xPos;
-        newRect.y = yPos;
-        newRect.w = wVal;
-        newRect.h = hVal;
-        newRect.makeDimensions();
+        new_rect.x = xPos;
+        new_rect.y = yPos;
+        new_rect.w = w;
+        new_rect.h = h;
+        new_rect.makeDimensions();
     }
 
     void render(SDL_Renderer* renderer)
     {
-        SDL_RenderCopy(renderer, texture, &originalRect, &newRect);
+        SDL_RenderCopy(renderer, texture, &original_rect, &new_rect);
     }
 
-    void renderRotate(SDL_Renderer* renderer, double angle, SDL_Point* center = NULL)
+    void render_rotate(SDL_Renderer* renderer, double angle, SDL_Point* center = NULL)
     {
-        SDL_RenderCopyEx(renderer, texture, &originalRect, &newRect, angle, center, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(renderer, texture, &original_rect, &new_rect, angle, center, SDL_FLIP_NONE);
     }
 
-    void renderFlip(SDL_Renderer* renderer, SDL_RendererFlip flip)
+    void render_flip(SDL_Renderer* renderer, SDL_RendererFlip flip)
     {
-        SDL_RenderCopyEx(renderer, texture, &originalRect, &newRect, 0.0, NULL, flip);
+        SDL_RenderCopyEx(renderer, texture, &original_rect, &new_rect, 0.0, NULL, flip);
     }
 
-    void setAlpha(Uint8 alpha)
+    void set_alpha(Uint8 alpha)
     {
         SDL_SetTextureAlphaMod(texture, alpha);
     }
@@ -492,76 +492,76 @@ public:
     }
 };
 
-class textureText
+class texture_text
 {
 public:
     TTF_Font* font = NULL;
     SDL_Texture* texture = NULL;
     SDL_Rect rect;
     SDL_Color color = {0, 0, 0, 0xFF};
-    int fontSize = 10;
+    int font_size = 10;
     const char* path = NULL;
     std::string text = "";
 
-    textureText() {}
-    textureText(SDL_Renderer* renderer, const char* pathInput, const char* textInput, int fontSizeVal, int xPos = 0, int yPos = 0)
+    texture_text() {}
+    texture_text(SDL_Renderer* renderer, const char* path_input, const char* text_input, int font_size_val, int xPos = 0, int yPos = 0)
     {
-        text = textInput;
-        fontSize = fontSizeVal;
-        path = pathInput;
-        font = TTF_OpenFont(path, fontSize);
-        SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
-        texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        text = text_input;
+        font_size = font_size_val;
+        path = path_input;
+        font = TTF_OpenFont(path, font_size);
+        SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
+        texture = SDL_CreateTextureFromSurface(renderer, text_surface);
 
         rect.x = xPos;
         rect.y = yPos;
         if (text != "")
         {
-            rect.w = textSurface->w;
-            rect.h = textSurface->h;
+            rect.w = text_surface->w;
+            rect.h = text_surface->h;
             rect.makeDimensions();
         }
 
-        SDL_FreeSurface(textSurface);
+        SDL_FreeSurface(text_surface);
     }
 
-    void init(SDL_Renderer* renderer, const char* pathInput, const char* textInput, int fontSizeVal, int xPos = 0, int yPos = 0)
+    void init(SDL_Renderer* renderer, const char* path_input, const char* text_input, int font_size_val, int xPos = 0, int yPos = 0)
     {
-        text = textInput;
-        fontSize = fontSizeVal;
-        path = pathInput;
-        font = TTF_OpenFont(path, fontSize);
-        SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
-        texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        text = text_input;
+        font_size = font_size_val;
+        path = path_input;
+        font = TTF_OpenFont(path, font_size);
+        SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
+        texture = SDL_CreateTextureFromSurface(renderer, text_surface);
 
         rect.x = xPos;
         rect.y = yPos;
         if (text != "")
         {
-            rect.w = textSurface->w;
-            rect.h = textSurface->h;
+            rect.w = text_surface->w;
+            rect.h = text_surface->h;
             rect.makeDimensions();
         }
 
-        SDL_FreeSurface(textSurface);
+        SDL_FreeSurface(text_surface);
     }
 
-    void reSize(int fontSizeVal)
+    void resize(int font_size_val)
     {
         if (font != NULL)
         {
-            fontSize = fontSizeVal;
-            font = TTF_OpenFont(path, fontSize);
-            SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
+            font_size = font_size_val;
+            font = TTF_OpenFont(path, font_size);
+            SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
 
             if (text != "")
             {
-                rect.w = textSurface->w;
-                rect.h = textSurface->h;
+                rect.w = text_surface->w;
+                rect.h = text_surface->h;
                 rect.makeDimensions();
             }
 
-            SDL_FreeSurface(textSurface);
+            SDL_FreeSurface(text_surface);
         }
         else
         {
@@ -569,31 +569,31 @@ public:
         }
     }
 
-    void changePos(int xPos, int yPos)
+    void change_pos(int xPos, int yPos)
     {
         rect.x = xPos;
         rect.y = yPos;
         rect.makeDimensions();
     }
 
-    void changePosAndSize(int fontSizeVal, int xPos, int yPos)
+    void change_pos_and_size(int font_size_val, int xPos, int yPos)
     {
         if (font != NULL)
         {
-            fontSize = fontSizeVal;
-            font = TTF_OpenFont(path, fontSize);
-            SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
+            font_size = font_size_val;
+            font = TTF_OpenFont(path, font_size);
+            SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
 
             rect.x = xPos;
             rect.y = yPos;
             if (text != "")
             {
-                rect.w = textSurface->w;
-                rect.h = textSurface->h;
+                rect.w = text_surface->w;
+                rect.h = text_surface->h;
                 rect.makeDimensions();
             }
 
-            SDL_FreeSurface(textSurface);
+            SDL_FreeSurface(text_surface);
         }
         else
         {
@@ -606,22 +606,22 @@ public:
         SDL_RenderCopy(renderer, texture, NULL, &rect);
     }
 
-    void createTexture(SDL_Renderer* renderer)
+    void create_texture(SDL_Renderer* renderer)
     {
         if (font != NULL)
         {
             SDL_DestroyTexture(texture);
-            SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
-            texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+            SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
+            texture = SDL_CreateTextureFromSurface(renderer, text_surface);
 
             if (text != "")
             {
-                rect.w = textSurface->w;
-                rect.h = textSurface->h;
+                rect.w = text_surface->w;
+                rect.h = text_surface->h;
                 rect.makeDimensions();
             }
 
-            SDL_FreeSurface(textSurface);
+            SDL_FreeSurface(text_surface);
         }
         else
         {
@@ -629,7 +629,7 @@ public:
         }
     }
 
-    void changeColor(SDL_Color* colorVal)
+    void change_color(SDL_Color* colorVal)
     {
         color.r = colorVal->r;
         color.g = colorVal->g;
@@ -637,11 +637,11 @@ public:
         color.a = colorVal->a;
     }
 
-    void changeFont(const char* pathVal)
+    void change_font(const char* pathVal)
     {
         font = NULL;
         path = pathVal;
-        font = TTF_OpenFont(path, fontSize);
+        font = TTF_OpenFont(path, font_size);
     }
 
     void destroy(void)

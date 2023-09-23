@@ -17,7 +17,7 @@ extern SDL_Color white;
 extern SDL_Color orange;
 extern SDL_Color yellow;
 
-void frameCap(int fps, Uint32 startingTick);
-void updateCursorPos(SDL_Rect* rect, int xPos, int yPos);
+void frame_cap(int fps, Uint32 starting_tick);
+void update_cursor_pos(SDL_Rect* rect, int xPos, int yPos);
 
 #endif // SDL_UTIL_H
