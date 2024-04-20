@@ -4,7 +4,9 @@
 #include <SDL2/SDL.h>
 
 #define EXPAND_COLOR(color) color.r, color.g, color.b
-#define LIMITS(a, param, b) (a <= param && param <= b)
+#define LIMITS(a, param, b) (((a) <= (param)) && ((param) <= (b)))
+
+typedef uint32_t uint;
 
 //RGB
 extern SDL_Color violet;
