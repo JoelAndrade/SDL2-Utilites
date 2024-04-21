@@ -22,4 +22,9 @@ extern SDL_Color SDL_yellow;
 void frame_cap(int fps, Uint32 starting_tick);
 void update_cursor_pos(SDL_Rect* rect, int xPos, int yPos);
 
+void rect_make_dimensions(SDL_Rect *rect);
+void rect_shiftX(SDL_Rect *rect, int multiplier = 1);
+void rect_shiftY(SDL_Rect *rect, int multiplier = 1);
+void rect_shiftXY(SDL_Rect *rect, int multiplier_x = 1, int multiplier_y = 1);
+
 #endif // SDL_UTIL_H

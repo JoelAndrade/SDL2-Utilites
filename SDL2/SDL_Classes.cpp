@@ -234,6 +234,7 @@ Window::~Window()
 }
 
 
+
 // TextureImage class functions
 TextureImage::TextureImage() {}
 TextureImage::TextureImage(SDL_Renderer* renderer, const char* image_path, double scale_image, int x, int y)
@@ -247,12 +248,12 @@ TextureImage::TextureImage(SDL_Renderer* renderer, const char* image_path, doubl
     original_rect.y = 0;
     original_rect.w = image_surface->w;
     original_rect.h = image_surface->h;
-    original_rect.makeDimensions();
+    rect_make_dimensions(&original_rect);
     new_rect.x = x;
     new_rect.y = y;
     new_rect.w = image_surface->w * scale_image;
     new_rect.h = image_surface->h * scale_image;
-    new_rect.makeDimensions();
+    rect_make_dimensions(&new_rect);
 
     SDL_FreeSurface(image_surface);
 }
@@ -267,12 +268,12 @@ TextureImage::TextureImage(SDL_Renderer* renderer, const char* image_path, int w
     original_rect.y = 0;
     original_rect.w = image_surface->w;
     original_rect.h = image_surface->h;
-    original_rect.makeDimensions();
+    rect_make_dimensions(&original_rect);
     new_rect.x = x;
     new_rect.y = y;
     new_rect.w = w;
     new_rect.h = h;
-    new_rect.makeDimensions();
+    rect_make_dimensions(&new_rect);
 
     SDL_FreeSurface(image_surface);
 }
@@ -289,12 +290,12 @@ TextureImage::TextureImage(SDL_Renderer* renderer, SDL_Color color, int w, int h
     original_rect.y = 0;
     original_rect.w = surface->w;
     original_rect.h = surface->h;
-    original_rect.makeDimensions();
+    rect_make_dimensions(&original_rect);
     new_rect.x = x;
     new_rect.y = y;
     new_rect.w = w;
     new_rect.h = h;
-    new_rect.makeDimensions();
+    rect_make_dimensions(&new_rect);
 
     SDL_FreeSurface(surface);
 }
@@ -311,12 +312,12 @@ void TextureImage::init(SDL_Renderer* renderer, const char* image_path, double s
     original_rect.y = 0;
     original_rect.w = image_surface->w;
     original_rect.h = image_surface->h;
-    original_rect.makeDimensions();
+    rect_make_dimensions(&original_rect);
     new_rect.x = x;
     new_rect.y = y;
     new_rect.w = image_surface->w * scale_image;
     new_rect.h = image_surface->h * scale_image;
-    new_rect.makeDimensions();
+    rect_make_dimensions(&new_rect);
 
     SDL_FreeSurface(image_surface);
 }
@@ -332,12 +333,12 @@ void TextureImage::init(SDL_Renderer* renderer, const char* image_path, int w, i
     original_rect.y = 0;
     original_rect.w = image_surface->w;
     original_rect.h = image_surface->h;
-    original_rect.makeDimensions();
+    rect_make_dimensions(&original_rect);
     new_rect.x = x;
     new_rect.y = y;
     new_rect.w = w;
     new_rect.h = h;
-    new_rect.makeDimensions();
+    rect_make_dimensions(&new_rect);
 
     SDL_FreeSurface(image_surface);
 }
@@ -355,12 +356,12 @@ void TextureImage::init(SDL_Renderer* renderer, SDL_Color color, int w, int h, i
     original_rect.y = 0;
     original_rect.w = surface->w;
     original_rect.h = surface->h;
-    original_rect.makeDimensions();
+    rect_make_dimensions(&original_rect);
     new_rect.x = xPos;
     new_rect.y = yPos;
     new_rect.w = w;
     new_rect.h = h;
-    new_rect.makeDimensions();
+    rect_make_dimensions(&new_rect);
 
     SDL_FreeSurface(surface);
 }
@@ -369,14 +370,14 @@ void TextureImage::resize(int w, int h)
 {
     new_rect.w = w;
     new_rect.h = h;
-    new_rect.makeDimensions();
+    rect_make_dimensions(&new_rect);
 }
 
 void TextureImage::change_pos(int x, int y)
 {
     new_rect.x = x;
     new_rect.y = y;
-    new_rect.makeDimensions();
+    rect_make_dimensions(&new_rect);
 }
 
 void TextureImage::render()
@@ -410,6 +411,7 @@ TextureImage::~TextureImage()
 }
 
 
+
 // TextureText class functions
 TextureText::TextureText() {}
 TextureText::TextureText(SDL_Renderer* renderer, const char* font_path, const char* text, int font_size, int x, int y)
@@ -428,7 +430,7 @@ TextureText::TextureText(SDL_Renderer* renderer, const char* font_path, const ch
     {
         rect.w = text_surface->w;
         rect.h = text_surface->h;
-        rect.makeDimensions();
+        rect_make_dimensions(&rect);
     }
 
     SDL_FreeSurface(text_surface);
@@ -437,6 +439,7 @@ TextureText::TextureText(SDL_Renderer* renderer, const char* font_path, const ch
 void TextureText::init(SDL_Renderer* renderer, const char* font_path, const char* text, int font_size, int x, int y)
 {
     TTF_CloseFont(font);
+    SDL_DestroyTexture(texture);
 
     this->renderer  = renderer;
     this->font_path = font_path;
@@ -452,7 +455,7 @@ void TextureText::init(SDL_Renderer* renderer, const char* font_path, const char
     {
         rect.w = text_surface->w;
         rect.h = text_surface->h;
-        rect.makeDimensions();
+        rect_make_dimensions(&rect);
     }
 
     SDL_FreeSurface(text_surface);
@@ -472,7 +475,7 @@ void TextureText::resize(int font_size)
     {
         rect.w = text_surface->w;
         rect.h = text_surface->h;
-        rect.makeDimensions();
+        rect_make_dimensions(&rect);
     }
 
     SDL_FreeSurface(text_surface);
@@ -482,7 +485,7 @@ void TextureText::change_pos(int x, int y)
 {
     rect.x = x;
     rect.y = y;
-    rect.makeDimensions();
+    rect_make_dimensions(&rect);
 }
 
 void TextureText::change_pos_and_size(int font_size, int x, int y)
@@ -501,7 +504,7 @@ void TextureText::change_pos_and_size(int font_size, int x, int y)
     {
         rect.w = text_surface->w;
         rect.h = text_surface->h;
-        rect.makeDimensions();
+        rect_make_dimensions(&rect);
     }
 
     SDL_FreeSurface(text_surface);
@@ -525,7 +528,7 @@ void TextureText::create_texture(void)
     {
         rect.w = text_surface->w;
         rect.h = text_surface->h;
-        rect.makeDimensions();
+        rect_make_dimensions(&rect);
     }
 
     SDL_FreeSurface(text_surface);
