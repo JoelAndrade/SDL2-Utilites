@@ -3,15 +3,15 @@
 #include <SDL2/SDL.h>
 
 //RGB
-SDL_Color violet = {255,   0, 255};
-SDL_Color green =  {  0, 255,   0};
-SDL_Color red =    {255,   0,   0};
-SDL_Color cyan =   {  0, 255, 255};
-SDL_Color blue =   {  0,   0, 255};
-SDL_Color black =  {  0,   0,   0};
-SDL_Color white =  {255, 255, 255};
-SDL_Color orange = {255, 100,   0};
-SDL_Color yellow = {255, 255,   0};
+SDL_Color SDL_violet = {255,   0, 255};
+SDL_Color SDL_green =  {  0, 255,   0};
+SDL_Color SDL_red =    {255,   0,   0};
+SDL_Color SDL_cyan =   {  0, 255, 255};
+SDL_Color SDL_blue =   {  0,   0, 255};
+SDL_Color SDL_black =  {  0,   0,   0};
+SDL_Color SDL_white =  {255, 255, 255};
+SDL_Color SDL_orange = {255, 100,   0};
+SDL_Color SDL_yellow = {255, 255,   0};
 
 void frame_cap(int fps, Uint32 starting_tick)
 {

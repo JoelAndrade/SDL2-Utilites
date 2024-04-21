@@ -9,15 +9,15 @@
 typedef uint32_t uint;
 
 //RGB
-extern SDL_Color violet;
-extern SDL_Color green;
-extern SDL_Color red;
-extern SDL_Color cyan;
-extern SDL_Color blue;
-extern SDL_Color black;
-extern SDL_Color white;
-extern SDL_Color orange;
-extern SDL_Color yellow;
+extern SDL_Color SDL_violet;
+extern SDL_Color SDL_green;
+extern SDL_Color SDL_red;
+extern SDL_Color SDL_cyan;
+extern SDL_Color SDL_blue;
+extern SDL_Color SDL_black;
+extern SDL_Color SDL_white;
+extern SDL_Color SDL_orange;
+extern SDL_Color SDL_yellow;
 
 void frame_cap(int fps, Uint32 starting_tick);
 void update_cursor_pos(SDL_Rect* rect, int xPos, int yPos);
