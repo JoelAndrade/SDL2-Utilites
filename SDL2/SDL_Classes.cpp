@@ -193,10 +193,14 @@ void Window::draw_rect(SDL_Color color, int xScale, int yScale)
 
 void Window::fill_rect(SDL_Color color, SDL_Rect rect, int xScale, int yScale)
 {
-    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+    --xScale;
+    --yScale;
+    rect.x -= xScale;
+    rect.y -= yScale;
+    rect.w += 2*xScale;
+    rect.h += 2*yScale;
 
-    rect.w++;
-    rect.h++;
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(renderer, &rect);
 }
 void Window::fill_rect(SDL_Color color, float xScale, float yScale)
@@ -214,7 +218,7 @@ void Window::draw_circle(SDL_Point center, SDL_Color color, int radius, int scal
     int x;
     int y;
 
-    SDL_Point previous_point = {(int)radius, 0};
+    SDL_Point previous_point = {radius, 0};
     for (double theta = 0; theta < 360; theta += increments)
     {
         x = round(radius*cos(DEG_TO_RAD(theta)));
