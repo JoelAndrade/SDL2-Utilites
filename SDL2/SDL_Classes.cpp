@@ -13,7 +13,7 @@
 
 // Window class functions
 Window::Window() {}
-Window::Window(int w, int h, const char* title, SDL_WindowFlags flag)
+Window::Window(int w, int h, const char *title, SDL_WindowFlags flag)
 {
     this->w = w;
     this->h = h;
@@ -22,7 +22,7 @@ Window::Window(int w, int h, const char* title, SDL_WindowFlags flag)
     SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
 }
 
-void Window::init(int w, int h, const char* title, SDL_WindowFlags flag)
+void Window::init(int w, int h, const char *title, SDL_WindowFlags flag)
 {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
@@ -72,11 +72,11 @@ bool Window::mouse_in_window(void)
     return false;
 }
 
-SDL_Texture* Window::create_surface_texture(int w, int h, SDL_Color color)
+SDL_Texture *Window::create_surface_texture(int w, int h, SDL_Color color)
 {
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+    SDL_Surface *surface = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
     SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, color.r, color.g, color.b, color.a));
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
 
     SDL_FreeSurface(surface);
     return texture;
@@ -113,7 +113,7 @@ void Window::draw_line(int x1, int y1, int x2, int y2, SDL_Color color, int xSca
         }
     }
 }
-void Window::draw_lines(SDL_Point* points, SDL_Color color, int num_points, int xScale, int yScale)
+void Window::draw_lines(SDL_Point *points, SDL_Color color, int num_points, int xScale, int yScale)
 {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
@@ -241,11 +241,11 @@ Window::~Window()
 
 // TextureImage class functions
 TextureImage::TextureImage() {}
-TextureImage::TextureImage(SDL_Renderer* renderer, const char* image_path, double scale_image, int x, int y)
+TextureImage::TextureImage(SDL_Renderer *renderer, const char *image_path, double scale_image, int x, int y)
 {
     this->renderer = renderer;
 
-    SDL_Surface* image_surface = IMG_Load(image_path);
+    SDL_Surface *image_surface = IMG_Load(image_path);
     texture = SDL_CreateTextureFromSurface(renderer, image_surface);
 
     original_rect.x = 0;
@@ -261,11 +261,11 @@ TextureImage::TextureImage(SDL_Renderer* renderer, const char* image_path, doubl
 
     SDL_FreeSurface(image_surface);
 }
-TextureImage::TextureImage(SDL_Renderer* renderer, const char* image_path, int w, int h, int x, int y)
+TextureImage::TextureImage(SDL_Renderer *renderer, const char *image_path, int w, int h, int x, int y)
 {
     this->renderer = renderer;
     
-    SDL_Surface* image_surface = IMG_Load(image_path);
+    SDL_Surface *image_surface = IMG_Load(image_path);
     texture = SDL_CreateTextureFromSurface(renderer, image_surface);
 
     original_rect.x = 0;
@@ -281,11 +281,11 @@ TextureImage::TextureImage(SDL_Renderer* renderer, const char* image_path, int w
 
     SDL_FreeSurface(image_surface);
 }
-TextureImage::TextureImage(SDL_Renderer* renderer, SDL_Color color, int w, int h, int x, int y)
+TextureImage::TextureImage(SDL_Renderer *renderer, SDL_Color color, int w, int h, int x, int y)
 {
     this->renderer = renderer;
     
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+    SDL_Surface *surface = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
     SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, color.r, color.g, color.b, color.a));
     texture = SDL_CreateTextureFromSurface(renderer, surface);
     set_blend(SDL_BLENDMODE_BLEND);
@@ -304,12 +304,12 @@ TextureImage::TextureImage(SDL_Renderer* renderer, SDL_Color color, int w, int h
     SDL_FreeSurface(surface);
 }
 
-void TextureImage::init(SDL_Renderer* renderer, const char* image_path, double scale_image, int x, int y)
+void TextureImage::init(SDL_Renderer *renderer, const char *image_path, double scale_image, int x, int y)
 {
     SDL_DestroyTexture(texture);
     this->renderer = renderer;
     
-    SDL_Surface* image_surface = IMG_Load(image_path);
+    SDL_Surface *image_surface = IMG_Load(image_path);
     texture = SDL_CreateTextureFromSurface(renderer, image_surface);
 
     original_rect.x = 0;
@@ -325,12 +325,12 @@ void TextureImage::init(SDL_Renderer* renderer, const char* image_path, double s
 
     SDL_FreeSurface(image_surface);
 }
-void TextureImage::init(SDL_Renderer* renderer, const char* image_path, int w, int h, int x, int y)
+void TextureImage::init(SDL_Renderer *renderer, const char *image_path, int w, int h, int x, int y)
 {
     SDL_DestroyTexture(texture);
     this->renderer = renderer;
     
-    SDL_Surface* image_surface = IMG_Load(image_path);
+    SDL_Surface *image_surface = IMG_Load(image_path);
     texture = SDL_CreateTextureFromSurface(renderer, image_surface);
 
     original_rect.x = 0;
@@ -346,12 +346,12 @@ void TextureImage::init(SDL_Renderer* renderer, const char* image_path, int w, i
 
     SDL_FreeSurface(image_surface);
 }
-void TextureImage::init(SDL_Renderer* renderer, SDL_Color color, int w, int h, int xPos, int yPos)
+void TextureImage::init(SDL_Renderer *renderer, SDL_Color color, int w, int h, int xPos, int yPos)
 {
     SDL_DestroyTexture(texture);
     this->renderer = renderer;
     
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+    SDL_Surface *surface = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
     SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, color.r, color.g, color.b, color.a));
     texture = SDL_CreateTextureFromSurface(renderer, surface);
     set_blend(SDL_BLENDMODE_BLEND);
@@ -389,7 +389,7 @@ void TextureImage::render()
     SDL_RenderCopy(renderer, texture, &original_rect, &new_rect);
 }
 
-void TextureImage::render_rotate(double angle, SDL_Point* center)
+void TextureImage::render_rotate(double angle, SDL_Point *center)
 {
     SDL_RenderCopyEx(renderer, texture, &original_rect, &new_rect, angle, center, SDL_FLIP_NONE);
 }
@@ -418,14 +418,14 @@ TextureImage::~TextureImage()
 
 // TextureText class functions
 TextureText::TextureText() {}
-TextureText::TextureText(SDL_Renderer* renderer, const char* font_path, const char* text, int font_size, int x, int y)
+TextureText::TextureText(SDL_Renderer *renderer, const char *font_path, const char *text, int font_size, int x, int y)
 {
     this->renderer  = renderer;
     this->font_path = font_path;
     this->text      = text;
     this->font_size = font_size;
     font = TTF_OpenFont(font_path, font_size);
-    SDL_Surface* text_surface = TTF_RenderText_Solid(font, this->text.c_str(), color);
+    SDL_Surface *text_surface = TTF_RenderText_Solid(font, this->text.c_str(), color);
     texture = SDL_CreateTextureFromSurface(renderer, text_surface);
 
     rect.x = x;
@@ -440,7 +440,7 @@ TextureText::TextureText(SDL_Renderer* renderer, const char* font_path, const ch
     SDL_FreeSurface(text_surface);
 }
 
-void TextureText::init(SDL_Renderer* renderer, const char* font_path, const char* text, int font_size, int x, int y)
+void TextureText::init(SDL_Renderer *renderer, const char *font_path, const char *text, int font_size, int x, int y)
 {
     TTF_CloseFont(font);
     SDL_DestroyTexture(texture);
@@ -450,7 +450,7 @@ void TextureText::init(SDL_Renderer* renderer, const char* font_path, const char
     this->text      = text;
     this->font_size = font_size;
     font = TTF_OpenFont(font_path, font_size);
-    SDL_Surface* text_surface = TTF_RenderText_Solid(font, this->text.c_str(), color);
+    SDL_Surface *text_surface = TTF_RenderText_Solid(font, this->text.c_str(), color);
     texture = SDL_CreateTextureFromSurface(renderer, text_surface);
 
     rect.x = x;
@@ -473,7 +473,7 @@ void TextureText::resize(int font_size)
     TTF_CloseFont(font);
     this->font_size = font_size;
     font = TTF_OpenFont(font_path, font_size);
-    SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    SDL_Surface *text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
 
     if (text != "")
     {
@@ -500,7 +500,7 @@ void TextureText::change_pos_and_size(int font_size, int x, int y)
     TTF_CloseFont(font);
     this->font_size = font_size;
     font = TTF_OpenFont(font_path, font_size);
-    SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    SDL_Surface *text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
 
     rect.x = x;
     rect.y = y;
@@ -525,7 +525,7 @@ void TextureText::create_texture(void)
         return;
 
     SDL_DestroyTexture(texture);
-    SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    SDL_Surface *text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
     texture = SDL_CreateTextureFromSurface(renderer, text_surface);
 
     if (text != "")
@@ -543,7 +543,7 @@ void TextureText::change_color(SDL_Color color)
     this->color = color;
 }
 
-void TextureText::change_font(const char* font_path)
+void TextureText::change_font(const char *font_path)
 {
     TTF_CloseFont(font);
     this->font_path = font_path;

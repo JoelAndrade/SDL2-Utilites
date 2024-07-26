@@ -21,7 +21,7 @@ void frame_cap(int fps, Uint32 starting_tick)
     }
 }
 
-void update_cursor_pos(SDL_Rect* rect, int xPos, int yPos)
+void update_cursor_pos(SDL_Rect *rect, int xPos, int yPos)
 {
     rect->x = xPos;
     rect->y = yPos;
