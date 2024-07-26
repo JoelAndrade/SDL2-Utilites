@@ -1,2 +1,11 @@
 # Copy SDL bin files to the root directory
-cp SDL2-Utilites/bin/*.dll .
+
+BASEDIR=$(dirname $0)
+if [ $BASEDIR == "." ]
+then
+    echo "if"
+    cp bin/*.dll ..
+else
+    echo "else"
+    cp SDL2-Utilites/bin/*.dll .
+fi

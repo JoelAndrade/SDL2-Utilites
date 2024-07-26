@@ -20,7 +20,7 @@ extern SDL_Color SDL_orange;
 extern SDL_Color SDL_yellow;
 
 void frame_cap(int fps, Uint32 starting_tick);
-void update_cursor_pos(SDL_Rect* rect, int xPos, int yPos);
+void update_cursor_pos(SDL_Rect *rect, int xPos, int yPos);
 
 void rect_make_dimensions(SDL_Rect *rect);
 void rect_shiftX(SDL_Rect *rect, int multiplier = 1);
