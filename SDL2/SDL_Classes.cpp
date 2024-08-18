@@ -51,27 +51,6 @@ void Window::set_window_pos(int x, int y)
     SDL_SetWindowPosition(window, x, y);
 }
 
-bool Window::mouse_in_window(void)
-{
-    SDL_Point global_mouse_pos;
-    SDL_Point window_pos;
-    SDL_Point relative;
-
-    SDL_GetGlobalMouseState(&global_mouse_pos.x, &global_mouse_pos.y);
-    SDL_GetWindowPosition(window, &window_pos.x, &window_pos.y);
-
-    relative.x = global_mouse_pos.x - window_pos.x;
-    relative.x = global_mouse_pos.y - window_pos.y;
-
-    if (LIMITS(0, relative.x, w) &&
-        LIMITS(0, relative.y, h))
-    {
-        return true;
-    }
-
-    return false;
-}
-
 SDL_Texture *Window::create_surface_texture(int w, int h, SDL_Color color)
 {
     SDL_Surface *surface = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
@@ -556,4 +535,98 @@ TextureText::~TextureText()
     
     if (TTF_WasInit())
         TTF_CloseFont(font);
+}
+
+
+
+// MouseCursor class functions
+MouseCursor::MouseCursor(SDL_Renderer *renderer, const char *image_path, double scale_image)
+{
+    NULL_CHECK(renderer);
+    NULL_CHECK(image_path);
+
+    this->renderer = renderer;
+
+    SDL_Surface *image_surface = IMG_Load(image_path);
+    texture = SDL_CreateTextureFromSurface(renderer, image_surface);
+
+    original_rect.w = image_surface->w;
+    original_rect.h = image_surface->h;
+    new_rect.w = image_surface->w * scale_image;
+    new_rect.h = image_surface->h * scale_image;
+
+    SDL_FreeSurface(image_surface);
+}
+
+void MouseCursor::init(SDL_Renderer *renderer, const char *image_path, double scale_image)
+{
+    NULL_CHECK(renderer);
+    NULL_CHECK(image_path);
+
+    this->renderer = renderer;
+
+    SDL_Surface *image_surface = IMG_Load(image_path);
+    texture = SDL_CreateTextureFromSurface(renderer, image_surface);
+
+    original_rect.w = image_surface->w;
+    original_rect.h = image_surface->h;
+    new_rect.w = image_surface->w * scale_image;
+    new_rect.h = image_surface->h * scale_image;
+
+    SDL_FreeSurface(image_surface);
+}
+
+void MouseCursor::update_cursor_pos(SDL_Window *window)
+{
+    SDL_Point global_mouse_pos;
+    SDL_Point window_pos;
+    SDL_Point relative;
+    int window_width;
+    int window_height;
+
+    SDL_GetGlobalMouseState(&global_mouse_pos.x, &global_mouse_pos.y);
+    SDL_GetWindowSize(window, &window_width, &window_height);
+    SDL_GetWindowPosition(window, &window_pos.x, &window_pos.y);
+
+    relative.x = global_mouse_pos.x - window_pos.x;
+    relative.y = global_mouse_pos.y - window_pos.y;
+
+    if (LIMITS(0, relative.x, window_width) && LIMITS(0, relative.y, window_height))
+    {
+        SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
+    }
+    else
+    {
+        mouse_pos.x = window_width;
+        mouse_pos.y = window_height;
+    }
+
+    new_rect.x = mouse_pos.x;
+    new_rect.y = mouse_pos.y;
+}
+
+void MouseCursor::resize(int w, int h)
+{
+    new_rect.w = w;
+    new_rect.h = h;
+}
+
+void MouseCursor::render(void)
+{
+    SDL_RenderCopy(renderer, texture, &original_rect, &new_rect);
+}
+
+void MouseCursor::set_alpha(Uint8 alpha)
+{
+    SDL_SetTextureAlphaMod(texture, alpha);
+}
+
+void MouseCursor::set_blend(SDL_BlendMode blendMode)
+{
+    SDL_SetTextureBlendMode(texture, blendMode);
+}
+
+MouseCursor::~MouseCursor()
+{
+    SDL_DestroyTexture(texture);
 }

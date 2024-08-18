@@ -3,6 +3,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
+#include "SDL_Util.h"
 
 #include <iostream>
 
@@ -28,8 +29,6 @@ public:
     void set_window_size(void);
 
     void set_window_pos(int x = SDL_WINDOWPOS_CENTERED, int y = SDL_WINDOWPOS_CENTERED);
-
-    bool mouse_in_window(void);
 
     SDL_Texture *create_surface_texture(int w, int h, SDL_Color color); // TODO: Doesnt the texture class already do this?
 
@@ -71,7 +70,7 @@ public:
     void resize(int w, int h);
     void change_pos(int x, int y);
 
-    void render();
+    void render(void);
     void render_rotate(double angle, SDL_Point *center = NULL);
     void render_flip(SDL_RendererFlip flip);
 
@@ -110,6 +109,32 @@ public:
     void change_font(const char *font_path);
 
     ~TextureText();
+};
+
+class MouseCursor
+{
+public:
+    SDL_Texture *texture = NULL;
+    SDL_Renderer *renderer = NULL;
+    SDL_Rect original_rect;
+    SDL_Rect new_rect;
+    SDL_Point mouse_pos;
+    bool hold = false;
+
+    MouseCursor(SDL_Renderer *renderer = NULL, const char *image_path = NULL, double scale_image = 1.0);
+
+    void init(SDL_Renderer *renderer = NULL, const char *image_path = NULL, double scale_image = 1.0);
+
+    void update_cursor_pos(SDL_Window *window);
+
+    void resize(int w, int h);
+
+    void render(void);
+
+    void set_alpha(Uint8 alpha);
+    void set_blend(SDL_BlendMode blendMode);
+
+    ~MouseCursor();
 };
 
 #endif // SDL_CLASSES_H

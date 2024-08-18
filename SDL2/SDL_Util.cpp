@@ -21,12 +21,6 @@ void frame_cap(int fps, Uint32 starting_tick)
     }
 }
 
-void update_cursor_pos(SDL_Rect *rect, int xPos, int yPos)
-{
-    rect->x = xPos;
-    rect->y = yPos;
-}
-
 void rect_make_dimensions(SDL_Rect *rect)
 {
     rect->tlX = rect->x;
@@ -105,5 +99,4 @@ void rect_shiftXY(SDL_Rect *rect, int multiplier_x, int multiplier_y)
     rect->bottomY -= yShift;
     rect->leftY -= yShift;
     rect->rightY -= yShift;
-} // Joel ended here
-
+}

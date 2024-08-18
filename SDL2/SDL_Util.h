@@ -5,8 +5,7 @@
 
 #define EXPAND_COLOR(color) color.r, color.g, color.b
 #define LIMITS(a, param, b) (((a) <= (param)) && ((param) <= (b)))
-
-typedef uint32_t uint;
+#define NULL_CHECK(pointer, ...) if (pointer == 0) return __VA_ARGS__
 
 //RGB
 extern SDL_Color SDL_violet;
@@ -20,8 +19,6 @@ extern SDL_Color SDL_orange;
 extern SDL_Color SDL_yellow;
 
 void frame_cap(int fps, Uint32 starting_tick);
-void update_cursor_pos(SDL_Rect *rect, int xPos, int yPos);
-
 void rect_make_dimensions(SDL_Rect *rect);
 void rect_shiftX(SDL_Rect *rect, int multiplier = 1);
 void rect_shiftY(SDL_Rect *rect, int multiplier = 1);
