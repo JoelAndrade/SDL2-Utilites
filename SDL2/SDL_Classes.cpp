@@ -391,6 +391,9 @@ void TextureImage::set_blend(SDL_BlendMode blendMode)
 TextureImage::~TextureImage()
 {
     SDL_DestroyTexture(texture);
+    
+    texture = NULL;
+    renderer = NULL;
 }
 
 
@@ -517,6 +520,12 @@ void TextureText::create_texture(void)
     SDL_FreeSurface(text_surface);
 }
 
+void TextureText::change_text(std::string text)
+{
+    this->text = text;
+    create_texture();
+}
+
 void TextureText::change_color(SDL_Color color)
 {
     this->color = color;
@@ -532,9 +541,16 @@ void TextureText::change_font(const char *font_path)
 TextureText::~TextureText()
 {
     SDL_DestroyTexture(texture);
+    texture = NULL;
     
     if (TTF_WasInit())
+    {
         TTF_CloseFont(font);
+        font = NULL;
+        font = NULL;
+    }
+
+    renderer = NULL;
 }
 
 

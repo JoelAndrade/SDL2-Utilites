@@ -97,6 +97,7 @@ public:
 
     void init(SDL_Renderer *renderer, const char *font_path, const char *text, int font_size, int x = 0, int y = 0);
 
+    void change_text(std::string text);
     void resize(int font_size);
     void change_pos(int x, int y);
     void change_pos_and_size(int font_size, int x, int y);
