@@ -20,9 +20,9 @@ public:
     SDL_Color render_color = RENDER_COLOR;
 
     Window();
-    Window(int w, int h, const char *title = "No Title", SDL_WindowFlags flag = SDL_WINDOW_SHOWN);
+    Window(int w, int h, const char *title = "No Title", Uint32 flag = SDL_WINDOW_SHOWN); // Use SDL_WindowFlags for flags
 
-    void init(int w, int h, const char *title = "No Title", SDL_WindowFlags flag = SDL_WINDOW_SHOWN);
+    void init(int w, int h, const char *title = "No Title", Uint32 flag = SDL_WINDOW_SHOWN); // Use SDL_WindowFlags for flags
 
     void set_window_size(int w, int h);
 

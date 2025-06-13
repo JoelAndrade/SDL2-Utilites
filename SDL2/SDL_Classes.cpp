@@ -13,7 +13,7 @@
 
 // Window class functions
 Window::Window() {}
-Window::Window(int w, int h, const char *title, SDL_WindowFlags flag)
+Window::Window(int w, int h, const char *title, Uint32 flag)
 {
     this->w = w;
     this->h = h;
@@ -22,7 +22,7 @@ Window::Window(int w, int h, const char *title, SDL_WindowFlags flag)
     SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
 }
 
-void Window::init(int w, int h, const char *title, SDL_WindowFlags flag)
+void Window::init(int w, int h, const char *title, Uint32 flag)
 {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
