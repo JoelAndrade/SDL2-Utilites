@@ -41,7 +41,7 @@ void Window::set_window_size(int w, int h)
     SDL_SetWindowSize(window, w, h);
 }
 
-void Window::set_window_size(void)
+void Window::get_window_size(void)
 {
     SDL_GetWindowSize(window, &w, &h);
 }
@@ -353,6 +353,13 @@ void TextureImage::resize(int w, int h)
 {
     new_rect.w = w;
     new_rect.h = h;
+    rect_make_dimensions(&new_rect);
+}
+
+void TextureImage::resize(double scale_image)
+{
+    new_rect.w = original_rect.w * scale_image;
+    new_rect.h = original_rect.h * scale_image;
     rect_make_dimensions(&new_rect);
 }
 

@@ -26,7 +26,7 @@ public:
 
     void set_window_size(int w, int h);
 
-    void set_window_size(void);
+    void get_window_size(void);
 
     void set_window_pos(int x = SDL_WINDOWPOS_CENTERED, int y = SDL_WINDOWPOS_CENTERED);
 
@@ -68,6 +68,8 @@ public:
     void init(SDL_Renderer *renderer, SDL_Color color, int w, int h, int xPos = 0, int yPos = 0);
 
     void resize(int w, int h);
+    void resize(double scale_image);
+
     void change_pos(int x, int y);
 
     void render(void);
