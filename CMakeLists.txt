@@ -8,10 +8,14 @@ target_include_directories(lib_SDL2 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/SDL2
 )
 
+target_link_directories(lib_SDL2 PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib
+)
+
 target_link_libraries(lib_SDL2
-    "-l SDL2main"
-    "-l SDL2"
-    "-l SDL2_image"
-    "-l SDL2_ttf"
-    "-l SDL2_mixer"
+    SDL2main
+    SDL2
+    SDL2_image
+    SDL2_ttf
+    SDL2_mixer
 )
