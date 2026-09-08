@@ -4,6 +4,7 @@
 #include "SDL_Util.h"
 #include "SDL_CLasses.h"
 
+#include <windows.h>
 #include <iostream>
 #include <math.h>
 
@@ -30,6 +31,13 @@ void Window::init(int w, int h, const char *title, Uint32 flag)
     this->w = w;
     this->h = h;
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flag);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
+}
+
+void Window::init_external(HWND hwnd)
+{
+    window = SDL_CreateWindowFrom((void *)hwnd);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawColor(renderer, render_color.r, render_color.g, render_color.b, render_color.a);
 }

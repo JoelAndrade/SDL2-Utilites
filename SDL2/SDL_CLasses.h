@@ -5,6 +5,7 @@
 #include "SDL2/SDL_ttf.h"
 #include "SDL_Util.h"
 
+#include <windows.h>
 #include <iostream>
 
 #define RENDER_COLOR {0, 0, 0, 0xFF} // black background
@@ -23,6 +24,7 @@ public:
     Window(int w, int h, const char *title = "No Title", Uint32 flag = SDL_WINDOW_SHOWN); // Use SDL_WindowFlags for flags
 
     void init(int w, int h, const char *title = "No Title", Uint32 flag = SDL_WINDOW_SHOWN); // Use SDL_WindowFlags for flags
+    void init_external(HWND hwnd);
 
     void set_window_size(int w, int h);
 
