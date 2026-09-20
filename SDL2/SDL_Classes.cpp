@@ -80,6 +80,11 @@ void Window::render(void)
     SDL_RenderPresent(renderer);
 }
 
+void Window::draw_point(int x, int y)
+{
+    SDL_RenderDrawPoint(renderer, x, y);
+}
+
 void Window::draw_line(int x1, int y1, int x2, int y2, SDL_Color color, int xScale, int yScale)
 {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
@@ -206,7 +211,7 @@ void Window::draw_circle(SDL_Point center, SDL_Color color, int radius, int scal
     int y;
 
     SDL_Point previous_point = {radius, 0};
-    for (double theta = 0; theta < 360; theta += increments)
+    for (double theta = 0.0; theta <= 360; theta += increments)
     {
         x = round(radius*cos(DEG_TO_RAD(theta)));
         y = round(radius*sin(DEG_TO_RAD(theta)));

@@ -38,6 +38,8 @@ public:
 
     void render(void);
 
+    void draw_point(int x, int y);
+
     void draw_line(int x1, int y1, int x2, int y2, SDL_Color color, int xScale = 1, int yScale = 1); // TODO: Add another functions that takes in points
     void draw_lines(SDL_Point *points, SDL_Color color, int num_points, int xScale = 1, int yScale = 1);
 
