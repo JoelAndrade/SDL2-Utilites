@@ -80,8 +80,9 @@ void Window::render(void)
     SDL_RenderPresent(renderer);
 }
 
-void Window::draw_point(int x, int y)
+void Window::draw_point(int x, int y, SDL_Color color)
 {
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawPoint(renderer, x, y);
 }
 
